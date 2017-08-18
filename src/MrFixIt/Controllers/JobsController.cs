@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MrFixIt.Controllers
 {
@@ -10,6 +11,7 @@ namespace MrFixIt.Controllers
     {
         private MrFixItContext db = new MrFixItContext();
 
+        [Authorize]
         public IActionResult Index()
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
@@ -28,11 +30,13 @@ namespace MrFixIt.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Job job)
         {
@@ -41,12 +45,14 @@ namespace MrFixIt.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Claim(int id)
         {
             Job claimedJob = db.Jobs.FirstOrDefault(job => job.JobId == id);
             return View(claimedJob);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Claim(string JobId)
         {

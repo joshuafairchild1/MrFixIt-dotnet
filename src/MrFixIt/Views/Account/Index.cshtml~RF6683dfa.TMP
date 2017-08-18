@@ -6,7 +6,6 @@
 }
 
 <h2 class="text-center">Mr. Fix-It</h2>
-<hr />
 <div class="row">
     <div class="card home-nav-card col s6 offset-s3">
         @if (User.Identity.IsAuthenticated)
@@ -21,12 +20,14 @@
         }
         else
         {
-            <form action="/Account/Register">
-                <button type="submit" class="btn waves-effect waves-light">Register</button>
-            </form>
-            <form action="/Account/Login">
-                <button type="submit" class="btn waves-effect waves-light">Login</button>
-            </form>
+            @using (Html.BeginForm("Register", "Account"))
+            {
+                <input type="button" class="btn waves-effect waves-light" value="Register" />
+
+            }
+
+            @*<p class="btn waves-effect waves-light">@Html.ActionLink("Register", "Register")</p>*@
+            <p class="btn waves-effect waves-light">@Html.ActionLink("Log in", "Login")</p>
         }
     </div>
 </div>

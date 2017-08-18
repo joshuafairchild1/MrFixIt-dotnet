@@ -1,4 +1,38 @@
 ﻿body {
     padding-top: 70px;
-    color: navy;
+    color: black;
+    background-color: #eff3f9;
+}
+
+.home-nav-card {
+    text-align: center;
+    padding: 40px !important;
+    margin-top: 20px;
+}
+
+.home-nav-card button {
+    margin: 15px;
+}
+
+.card-title {
+    font-size: 30px;
+}
+
+.card {
+    background-color: #448AFF;
+    padding: 10px;
+}
+
+.card a {
+    color: black;
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: #448AFF;
+    border: solid 0px black;
+}
+
+.navbar-home {
+    color: black;
 }
