@@ -1,35 +1,51 @@
-﻿<div class="text-center">
+﻿@{
+    ViewBag.Title = "All Listings";
+}
+
+<div class="text-center">
     <h3>Our Current Jobs</h3>
+
     <a href="/Jobs/Create" class="btn-floating btn-large waves-effect waves-light red">
         <i class="material-icons">add</i>
     </a>
+
 </div>
-@foreach (var job in Model["jobs"])
-{
-    @if (!job.Completed)
+
+<div class="job-listings-container">
+    @foreach (var job in Model["jobs"])
     {
-        <ul>
-            <li>@job.Title</li>
-
-            <ul>
-                <li>@job.Description</li>
-            </ul>
-
-            @if (job.Worker == null)
-            {
-                <li class="btn">
-                    This Job is unclaimed.
-
-                    @if (Model["worker"] != null)
+        @if (!job.Completed)
+        {
+            <div class="card job-card">
+                <div class="listing-header">
+                    <span class="card-title">@job.Title</span>
+                    @if (job.Worker == null)
                     {
-                        @Html.ActionLink("Claim This Job", "Claim", new { @text = @job.Title, id = job.JobId })
+                        <div class="chip">
+                            This Job is unclaimed
+                            @*<i class="close material-icons">close</i>*@
+                        </div>
                     }
-                </li>
-            }
-            else
-            {
-                <li class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</li>
-            }
-        </ul>
+                    <hr />
+                </div>
+                    
+
+                <div class="card-content">
+                    <p class="description"><strong>Description:</strong> @job.Description</p>
+                </div>
+
+                <div class="card-action">
+                    @if (job.Worker == null && Model["worker"] != null)
+                    {
+                            @Html.ActionLink("Claim This Job", "Claim", new { @text = @job.Title, id = job.JobId, @class="btn" })
+                    }
+                    else
+                    {
+                        <button class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</button>
+                    }
+                </div>
+            </div>
+        }
     }
-}
+</div>
+
