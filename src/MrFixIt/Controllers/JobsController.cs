@@ -48,10 +48,11 @@ namespace MrFixIt.Controllers
         }
 
         [HttpPost]
-        public IActionResult Claim(Job job)
+        public IActionResult Claim(string JobId)
         {
-            job.Worker = db.Workers.FirstOrDefault(worker => worker.UserName == User.Identity.Name);
-            db.Entry(job).State = EntityState.Modified;
+            Job thisJob = db.Jobs.FirstOrDefault(job => job.JobId == int.Parse(JobId));
+            thisJob.Worker = db.Workers.FirstOrDefault(worker => worker.UserName == User.Identity.Name);
+            db.Entry(thisJob).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

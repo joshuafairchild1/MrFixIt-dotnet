@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MrFixIt.Controllers
 {
@@ -9,6 +10,7 @@ namespace MrFixIt.Controllers
     {
         private MrFixItContext db = new MrFixItContext();
 
+        [Authorize]
         public IActionResult Index()
         {
             /* Attempts to find the worker account belonging to the authenticated user,
@@ -27,12 +29,13 @@ namespace MrFixIt.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Worker worker)
         {
