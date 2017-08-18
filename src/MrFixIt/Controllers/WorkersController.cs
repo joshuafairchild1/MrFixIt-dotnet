@@ -57,5 +57,16 @@ namespace MrFixIt.Controllers
             db.SaveChanges();
             return Content("Already completed", "text/plain");
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult MarkJobActive(int JobId)
+        {
+            Job activeJob = db.Jobs.FirstOrDefault(job => job.JobId == JobId);
+            activeJob.Pending = false;
+            db.Entry(activeJob).State = EntityState.Modified;
+            db.SaveChanges();
+            return Content("ACTIVE", "text/plain");
+        }
     }
 }

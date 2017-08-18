@@ -5,25 +5,26 @@
     @foreach (var job in Model.Jobs)
     {
         <h5>@job.Title</h5>
+        <p id="job-@job.JobId-activity"></p>
+        @if (!job.Completed && !job.Pending) { <p id='job-@job.JobId-activity-static'>ACTIVE</p> }
+
+
         @if (job.Completed)
         {
             <p>Already completed</p>
         }
         else
         {
-            <div id="job-@job.JobId">
+            <div id="job-@job.JobId-completion">
                 <button name="JobId" class="mark-complete" value="@job.JobId">Mark complete</button>
             </div>
+
+                @if (job.Pending)
+                {
+                    <button name="JobId" class="mark-active" value="@job.JobId">Mark as active job</button>
+                }
         }
 
+
     }
-    @if (Model.Avaliable)
-    {
-        <h2>Please @Html.ActionLink("select a job", "Index", "Jobs").</h2>
-    }
-    else
-    {
-        <p>You are already assigned to a job.</p>
-    }
-    <div class="hello"></div>
 </div>

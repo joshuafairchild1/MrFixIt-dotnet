@@ -16,11 +16,26 @@
             type: 'POST',
             dataType: 'html',
             data: { jobId },
-            //async: false,
-            success: function(result) {
-                console.log(result);
-                $(`#job-${jobId}`).html(result);
-            }
+            success: result => {
+                $(`#job-${jobId}-completion`).html(result);
+                $(`#job-${jobId}-activity`).html("");
+                $(`#job-${jobId}-activity-static`).html("");
+                $(".mark-active").hide();
+            } 
         })
+    });
+
+    $(".mark-active").click(function () {
+        $(this).hide();
+        const jobId = $(this).val();
+        $.ajax({
+            url: "Workers/MarkJobActive",
+            type: "POST",
+            dataType: 'html',
+            data: { jobId },
+            success: result => {
+                $(`#job-${jobId}-activity`).html(result);
+            }
+        });
     });
 });
