@@ -11,7 +11,7 @@
             <li>@job.Description</li>
         </ul>
 
-        @if (job.Worker == null)
+        @if (job.Worker == null && !job.Completed)
         {
             <li class="btn">
                 This Job is unclaimed.
@@ -22,10 +22,13 @@
                 }
             </li>
         }
+        else if (job.Completed)
+        {
+            <li class="btn">This job is already completed</li>
+        }
         else
         {
             <li class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</li>
-
         }
     </ul>
 
