@@ -1,28 +1,36 @@
-﻿@{
+﻿@model RegisterViewModel
+@using MrFixIt.ViewModels
+@{
     ViewBag.Title = "Register";
 }
 
-@using MrFixIt.ViewModels
 
-@model RegisterViewModel
+<a class="back-arrow" href="/Account/Index">
+    <i class="medium material-icons">arrow_back</i>
+</a>
 
-<h2>Register a new worker</h2>
-<hr />
+<h3 class="text-center">Register for an account</h3>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    <div class="input-field">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email)
+<div class="row">
+    <div class="col s6 offset-s3">
+        <div class="card form-card">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                <div class="input-field">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @required = "true", @type = "email" })
+                </div>
+                <div class="input-field">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @required = "true" })
+                </div>
+                <div class="input-field">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @required = "true" })
+                </div>
+
+                <input type="submit" class="btn waves waves-light" value="Register" />
+            }
+        </div>
     </div>
-    <div class="input-field">
-        @Html.LabelFor(m => m.Password)
-        @Html.PasswordFor(m => m.Password)
-    </div>
-    <div class="input-field">
-        @Html.LabelFor(m => m.ConfirmPassword)
-        @Html.PasswordFor(m => m.ConfirmPassword)
-    </div>
-    
-    <input type="submit" class="btn waves waves-light" value="Register" />
-}
+</div>

@@ -1,6 +1,8 @@
 ﻿<div class="text-center">
     <h3>Our Current Jobs</h3>
-    @Html.ActionLink("Add a new job", "Create")
+    <a href="/Jobs/Create" class="btn-floating btn-large waves-effect waves-light red">
+        <i class="material-icons">add</i>
+    </a>
 </div>
 @foreach (var job in Model["jobs"])
 {

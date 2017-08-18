@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 70px;
     color: black;
-    background-color: #eff3f9;
+    background-color: #FAD6D7;
 }
 
 .home-nav-card {
@@ -23,9 +23,19 @@
     padding: 10px;
 }
 
+.form-card {
+    background-color: #eff3f9;
+    padding: 30px;
+    margin-top: 40px;
+}
+
 .card a {
     color: black;
     font-weight: bold;
+}
+
+.input-field label {
+    color: black ;
 }
 
 .navbar {
@@ -35,4 +45,9 @@
 
 .navbar-home {
     color: black;
+}
+
+.back-arrow i {
+    margin-top: 15px;
+    position: fixed;
 }
