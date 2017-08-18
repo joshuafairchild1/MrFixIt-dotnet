@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 
 namespace MrFixIt.Controllers
 {
@@ -10,10 +10,22 @@ namespace MrFixIt.Controllers
     {
         private MrFixItContext db = new MrFixItContext();
 
-        // GET a list of all job, and eagerly-load the worker for each job
         public IActionResult Index()
         {
-            return View(db.Jobs.Include(job => job.Worker).ToList());
+            Dictionary<string, object> model = new Dictionary<string, object> { };
+            
+            /* attempts to find the Worker belonging to the authenticated user.
+                Worker is loaded into the model so that an if conditional may be used 
+                within the view to only display content if the user is a "Worker" */
+
+            Worker thisWorker = db.Workers.FirstOrDefault(worker => worker.UserName == User.Identity.Name);
+            model.Add("worker", thisWorker);
+
+            // then load the list of jobs into the model, eagerly-loading the Worker related to each job 
+
+            List<Job> jobs = db.Jobs.Include(job => job.Worker).ToList();
+            model.Add("jobs", jobs);
+            return View(model);
         }
 
         public IActionResult Create()
