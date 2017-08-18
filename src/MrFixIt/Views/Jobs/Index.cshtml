@@ -4,35 +4,30 @@
 </div>
 @foreach (var job in Model["jobs"])
 {
-    <ul>
-        <li>@job.Title</li>
-
+    @if (!job.Completed)
+    {
         <ul>
-            <li>@job.Description</li>
+            <li>@job.Title</li>
+
+            <ul>
+                <li>@job.Description</li>
+            </ul>
+
+            @if (job.Worker == null)
+            {
+                <li class="btn">
+                    This Job is unclaimed.
+
+                    @if (Model["worker"] != null)
+                    {
+                        @Html.ActionLink("Claim This Job", "Claim", new { @text = @job.Title, id = job.JobId })
+                    }
+                </li>
+            }
+            else
+            {
+                <li class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</li>
+            }
         </ul>
-
-        @if (job.Worker == null && !job.Completed)
-        {
-            <li class="btn">
-                This Job is unclaimed.
-                
-                @if (Model["worker"] != null)
-                {
-                    @Html.ActionLink("Claim This Job", "Claim", new { @text = @job.Title, id = job.JobId })
-                }
-            </li>
-        }
-        else if (job.Completed)
-        {
-            <li class="btn">This job is already completed</li>
-        }
-        else
-        {
-            <li class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</li>
-        }
-    </ul>
-
-
-    <hr />
+    }
 }
-
