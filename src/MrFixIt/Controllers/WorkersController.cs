@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MrFixIt.Controllers
 {
     public class WorkersController : Controller
     {
         private MrFixItContext db = new MrFixItContext();
-        // GET: /<controller>/
+
         public IActionResult Index()
         {
-            var thisWorker = db.Workers.Include(i =>i.Jobs).FirstOrDefault(i => i.UserName == User.Identity.Name);
+            /* Attempts to find the worker account belonging to the authenticated user,
+               if successful the worker is passed into the Index view as the model, 
+               else user is directed to the Create view */
+
+            Worker thisWorker = db.Workers.Include(worker => worker.Jobs)
+                                          .FirstOrDefault(worker => worker.UserName == User.Identity.Name);
             if (thisWorker != null)
             {
                 return View(thisWorker);
@@ -36,6 +36,8 @@ namespace MrFixIt.Controllers
         [HttpPost]
         public IActionResult Create(Worker worker)
         {
+            /* "Saves" the username of the authenticated user to the newly generated Worker then saves to the db */
+
             worker.UserName = User.Identity.Name;
             db.Workers.Add(worker); 
             db.SaveChanges();

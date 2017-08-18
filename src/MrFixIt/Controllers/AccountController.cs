@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MrFixIt.Models;
 using Microsoft.AspNetCore.Identity;
 using MrFixIt.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MrFixIt.Controllers
 {
@@ -16,7 +13,7 @@ namespace MrFixIt.Controllers
         private MrFixItContext db = new MrFixItContext();
 
 
-        //Basic User Account Info here...
+        
         private readonly MrFixItContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -28,16 +25,14 @@ namespace MrFixIt.Controllers
             _db = db;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         public IActionResult Index()
         {
+            /* Checks to see if the authenticated user ALSO has a 'worker' account,
+             * if so it is passed in w/ the Index view, else Index is passed in w/ no model */
+
             if (User.Identity.IsAuthenticated)
             {
-                var thisWorker = db.Workers.FirstOrDefault(item => item.UserName == User.Identity.Name);
+                Worker thisWorker = db.Workers.FirstOrDefault(worker => worker.UserName == User.Identity.Name);
                 return View(thisWorker);
             }
             else
@@ -45,7 +40,6 @@ namespace MrFixIt.Controllers
                 return View();
             }
         }
-
 
         public IActionResult Register()
         {
@@ -55,7 +49,10 @@ namespace MrFixIt.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.Email };
+            /* Takes in user data from the viewmodel, and attempts to asynchronously create a user
+             * account.  */
+
+            ApplicationUser user = new ApplicationUser { UserName = model.Email };
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -75,6 +72,9 @@ namespace MrFixIt.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            /* Takes in user data from the viewmodel, and attempts to asynchronously verify and 
+             * sign in a user account.  */
+
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
             if (result.Succeeded)
             {
