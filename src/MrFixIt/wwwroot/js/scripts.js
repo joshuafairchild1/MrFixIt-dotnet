@@ -1,11 +1,15 @@
 ﻿$(() => {
-    $(".claim-job-form").submit(event => {
-        event.preventDefault();
+    $(".claim-job").click(function() {
+        const jobId = $(this).val();
+        $(this).hide();
         $.ajax({
-            url: '@Url.Action("Create")',
+            url: 'Jobs/Claim',
             type: 'POST',
-            dataType: 'json',
-            data: $(this).serialize()
+            dataType: 'html',
+            data: { jobId },
+            success: function () {
+                $(".claimed").html("This job has been claimed")
+            }
         });
     });
 
@@ -38,4 +42,6 @@
             }
         });
     });
+
+
 });

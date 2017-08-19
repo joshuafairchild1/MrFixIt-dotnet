@@ -26,6 +26,14 @@
                             @*<i class="close material-icons">close</i>*@
                         </div>
                     }
+                    else
+                    {
+                        <div class="chip">
+                            This Job is claimed by @job.Worker.FirstName @job.Worker.LastName
+                            @*<i class="close material-icons">close</i>*@
+                        </div>
+
+                    }
                     <hr />
                 </div>
                     
@@ -37,11 +45,11 @@
                 <div class="card-action">
                     @if (job.Worker == null && Model["worker"] != null)
                     {
-                            @Html.ActionLink("Claim This Job", "Claim", new { @text = @job.Title, id = job.JobId, @class="btn" })
-                    }
-                    else
-                    {
-                        <button class="btn">This Job is claimed by @job.Worker.FirstName @job.Worker.LastName</button>
+
+                        <button value="@job.JobId" type="submit" class="claim-job btn waves-effect waves-light">Claim This Job</button>
+                        <h6 class="claimed"></h6>
+
+                        
                     }
                 </div>
             </div>
