@@ -21,10 +21,10 @@
             dataType: 'html',
             data: { jobId },
             success: result => {
-                $(`#job-${jobId}-completion`).html(result);
+                $(`#job-${jobId}-completion`).html(`<div class="chip">Completed<i class="material-icons">check</i></div>`);
                 $(`#job-${jobId}-activity`).html("");
-                $(`#job-${jobId}-activity-static`).html("");
-                $(".mark-active").hide();
+                $(`#active-chip-${jobId}`).hide();
+                $(`.mark-active-${jobId}`).hide();
             } 
         })
     });
@@ -32,13 +32,14 @@
     $(".mark-active").click(function () {
         $(this).hide();
         const jobId = $(this).val();
+        console.log(jobId);
         $.ajax({
             url: "Workers/MarkJobActive",
             type: "POST",
             dataType: 'html',
             data: { jobId },
             success: result => {
-                $(`#job-${jobId}-activity`).html(result);
+                $(`#job-${jobId}-activity`).html(`<div class="chip">Active</div>`);
             }
         });
     });

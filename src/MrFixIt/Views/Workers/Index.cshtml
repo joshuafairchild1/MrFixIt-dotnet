@@ -1,30 +1,76 @@
 ﻿@model MrFixIt.Models.Worker
-<div class="text-center">
-    <h4>Hello Worker @Model.FirstName @Model.LastName. You are Logged In</h4>
-    <h3>Your Current Jobs:</h3>
+@{
+    ViewBag.Title = "Worker Dashboard";
+}
+
+<h3 class="text-center">Your Current Jobs:</h3>
+<div class="job-listings-container">
     @foreach (var job in Model.Jobs)
     {
-        <h5>@job.Title</h5>
-        <p id="job-@job.JobId-activity"></p>
-        @if (!job.Completed && !job.Pending) { <p id='job-@job.JobId-activity-static'>ACTIVE</p> }
+        <div class="card job-card">
 
-
-        @if (job.Completed)
-        {
-            <p>Already completed</p>
-        }
-        else
-        {
-            <div id="job-@job.JobId-completion">
-                <button name="JobId" class="mark-complete" value="@job.JobId">Mark complete</button>
+            <div class="listing-header">
+                <span class="card-title">@job.Title</span>
+                <hr />
             </div>
 
-                @if (job.Pending)
+            <div class="card-content">
+                <div id="job-@job.JobId-activity"></div>
+
+                @if (!job.Completed && !job.Pending)
                 {
-                    <button name="JobId" class="mark-active" value="@job.JobId">Mark as active job</button>
+                    <div id="active-chip-@job.JobId" class="chip">
+                        Active
+                    </div>
                 }
-        }
 
+                @if (job.Completed)
+                {
+                    <div class="chip">
+                        Complete
+                        <i class="material-icons">check</i>
+                    </div>
+                }
 
+                @*<div class="container">
+                    <div class="row">
+                        <div class="col s4">
+                            @if (!job.Completed)
+                            {
+                                <div id="job-@job.JobId-completion">
+                                    <button name="JobId" class="mark-complete btn waves-effect waves-light" value="@job.JobId">Mark complete</button>
+                                </div>
+                            }
+                        </div>
+                        <div class="col s4">
+                            @if (job.Pending && !job.Completed)
+                            {
+                                <button name="JobId" class="mark-active mark-active-@job.JobId btn waves-effect waves-light" value="@job.JobId">Mark as active job</button>
+                            }
+                        </div>
+                    </div>
+                </div>*@
+                <div class="job-card-buttons">
+                    @if (!job.Completed)
+                    {
+                        <span id="job-@job.JobId-completion">
+                            <button name="JobId" class="mark-complete btn waves-effect waves-light" value="@job.JobId">Mark complete</button>
+                        </span>
+                        @if (job.Pending)
+                        {
+                            <span name="JobId" class="mark-active mark-active-@job.JobId btn waves-effect waves-light" value="@job.JobId">Mark as active job</span>
+                        }
+                    }
+                    
+                </div>
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
     }
 </div>
