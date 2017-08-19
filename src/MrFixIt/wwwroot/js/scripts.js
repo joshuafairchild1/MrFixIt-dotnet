@@ -8,7 +8,8 @@
             dataType: 'html',
             data: { jobId },
             success: function () {
-                $(".claimed").html("This job has been claimed")
+                console.log('hello')
+                $(`.claimed-${jobId}`).html("This job has been claimed")
             }
         });
     });

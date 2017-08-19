@@ -5,6 +5,10 @@
 
 <h3 class="text-center">Your Current Jobs:</h3>
 <div class="job-listings-container">
+    @if(Model.Jobs.Count == 0)
+    {
+        <h5>You currently have no jobs listed.</h5>
+    }
     @foreach (var job in Model.Jobs)
     {
         <div class="card job-card">
@@ -27,29 +31,11 @@
                 @if (job.Completed)
                 {
                     <div class="chip">
-                        Complete
+                        Completed
                         <i class="material-icons">check</i>
                     </div>
                 }
 
-                @*<div class="container">
-                    <div class="row">
-                        <div class="col s4">
-                            @if (!job.Completed)
-                            {
-                                <div id="job-@job.JobId-completion">
-                                    <button name="JobId" class="mark-complete btn waves-effect waves-light" value="@job.JobId">Mark complete</button>
-                                </div>
-                            }
-                        </div>
-                        <div class="col s4">
-                            @if (job.Pending && !job.Completed)
-                            {
-                                <button name="JobId" class="mark-active mark-active-@job.JobId btn waves-effect waves-light" value="@job.JobId">Mark as active job</button>
-                            }
-                        </div>
-                    </div>
-                </div>*@
                 <div class="job-card-buttons">
                     @if (!job.Completed)
                     {
@@ -58,18 +44,11 @@
                         </span>
                         @if (job.Pending)
                         {
-                            <span name="JobId" class="mark-active mark-active-@job.JobId btn waves-effect waves-light" value="@job.JobId">Mark as active job</span>
+                            <button name="JobId" class="mark-active mark-active-@job.JobId btn waves-effect waves-light" value="@job.JobId">Mark as active job</button>
                         }
                     }
                     
                 </div>
-                
-
-                
-
-                
-
-                
             </div>
         </div>
     }

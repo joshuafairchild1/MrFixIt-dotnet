@@ -1,29 +1,31 @@
 ﻿@using System.Security.Claims
 @model MrFixIt.Models.Worker
-
-<html>
-<head>
-    <title>Create</title>
-</head>
-<body>
-    <h2>Create</h2>
-    <hr />
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h4>You do not have a complete worker profile. Please create your worker profile</h4>
-        @using (Html.BeginForm())
-        {
-            @Html.LabelFor(model => model.FirstName)
-            @Html.TextBoxFor(model => model.FirstName)
-            @Html.LabelFor(model => model.LastName)
-            @Html.TextBoxFor(model => model.LastName)
-
-
-            <input type="submit" value="Register" />
-        }
-    }
+@{
+    ViewBag.Title = "Create Worker Account";
+}
 
 
 
-</body>
-</html>
+@if (User.Identity.IsAuthenticated)
+{
+    <h4 class="text-center">You do not have a complete worker profile. Please create your worker profile</h4>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card form-card text-center">
+                @using (Html.BeginForm())
+                {
+                    <div class="input-field">
+                        @Html.Label("First Name")
+                        @Html.TextBoxFor(model => model.FirstName, new { @required = "true" })
+                    </div>
+                    <div class="input-field">
+                        @Html.Label("Last name")
+                        @Html.TextBoxFor(model => model.LastName, new { @required = "true" })
+                    </div>
+
+                    <input class="btn waves-effect waves-light" type="submit" value="Register" />
+                }
+            </div>
+        </div>
+    </div>
+}

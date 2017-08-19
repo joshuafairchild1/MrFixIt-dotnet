@@ -43,11 +43,8 @@
                 <div class="card-action">
                     @if (job.Worker == null && Model["worker"] != null)
                     {
-
                         <button value="@job.JobId" type="submit" class="claim-job btn waves-effect waves-light">Claim This Job</button>
-                        <h6 class="claimed"></h6>
-
-                        
+                        <h6 class="claimed-@job.JobId"></h6>
                     }
                 </div>
             </div>

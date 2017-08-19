@@ -11,8 +11,6 @@ namespace MrFixIt.Controllers
     public class AccountController : Controller
     {
         private MrFixItContext db = new MrFixItContext();
-
-
         
         private readonly MrFixItContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
